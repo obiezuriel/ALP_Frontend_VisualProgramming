@@ -24,10 +24,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.obie.alp_frontend_visualprogramming.R
+import com.obie.alp_frontend_visualprogramming.ui.viewmodel.JournalDetailViewModel
 
 
 @Composable
-fun JournalDetailView(){
+fun JournalDetailView(
+    journalId: Int,
+    viewModel: JournalDetailViewModel
+){
     Box(
         modifier = Modifier
             .fillMaxSize()
