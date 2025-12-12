@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -30,10 +31,17 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.obie.alp_frontend_visualprogramming.R
+import com.obie.alp_frontend_visualprogramming.ui.uistate.AllJournalingUIState
+import com.obie.alp_frontend_visualprogramming.ui.viewmodel.AllJournalingViewModel
 
 @Composable
-fun AllJournalingView(){
+fun AllJournalingView(
+    viewModel: AllJournalingViewModel
+){
+    val dataStatus = viewModel.allJournalingStatus
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -92,18 +100,31 @@ fun AllJournalingView(){
                 }
             }
 
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.padding(top = 20.dp)
-            ) {
-                items(10) {
-                    JournalCard(
-                        title = "Title",
-                        date = "THURSDAY, 4 Dec 2025",
-                        onClick = {  }
-                    )
+            when(dataStatus){
+                is AllJournalingUIState.Start -> {
+
+                }
+
+                is AllJournalingUIState.Loading -> {
+
+                }
+
+                is AllJournalingUIState.Success -> {
+                    LazyColumn(
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        modifier = Modifier.padding(top = 20.dp)
+                    ) {
+                        items(dataStatus.journals) { journal ->
+                            JournalCard(journal.title, journal.date, onClick = { /* Handle click */ })
+                        }
+                    }
+                }
+
+                is AllJournalingUIState.Error -> {
+
                 }
             }
+
         }
     }
 }
