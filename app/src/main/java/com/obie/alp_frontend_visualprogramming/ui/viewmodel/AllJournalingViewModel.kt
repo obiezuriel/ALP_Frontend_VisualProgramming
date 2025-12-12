@@ -15,6 +15,10 @@ class AllJournalingViewModel : ViewModel() {
     var allJournalingStatus: AllJournalingUIState by mutableStateOf(AllJournalingUIState.Start)
         private set
 
+    init {
+        getAllJournals()
+    }
+
     fun getAllJournals(){
         viewModelScope.launch{
             allJournalingStatus = AllJournalingUIState.Loading

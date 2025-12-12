@@ -23,14 +23,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.obie.alp_frontend_visualprogramming.R
+import com.obie.alp_frontend_visualprogramming.ui.viewmodel.CreateJournalViewModel
 
 @Composable
-fun CreateJournalView(){
-    var title by remember { mutableStateOf("") }
-    var date by remember { mutableStateOf("") }
-    var content by remember { mutableStateOf("") }
-
+fun CreateJournalView(
+    viewModel: CreateJournalViewModel,
+    navController: NavHostController
+){
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
 
@@ -59,7 +60,7 @@ fun CreateJournalView(){
         ) {
 
             IconButton(
-                onClick = { /* Handle back */ },
+                onClick = { navController.popBackStack() },
                 modifier = Modifier
                     .padding(top = 16.dp, start = 0.dp)
                     .size(50.dp)
@@ -100,8 +101,8 @@ fun CreateJournalView(){
             )
             Spacer(modifier = Modifier.height(8.dp))
             TextField(
-                value = title,
-                onValueChange = { title = it },
+                value = viewModel.title,
+                onValueChange = { viewModel.title = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp),
@@ -125,8 +126,8 @@ fun CreateJournalView(){
             )
             Spacer(modifier = Modifier.height(8.dp))
             TextField(
-                value = date,
-                onValueChange = { date = it },
+                value = viewModel.date,
+                onValueChange = { viewModel.date = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp),
@@ -150,8 +151,8 @@ fun CreateJournalView(){
             )
             Spacer(modifier = Modifier.height(8.dp))
             TextField(
-                value = content,
-                onValueChange = { content = it },
+                value = viewModel.content,
+                onValueChange = { viewModel.content = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp),

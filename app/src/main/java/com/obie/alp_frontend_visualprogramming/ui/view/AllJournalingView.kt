@@ -29,12 +29,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.obie.alp_frontend_visualprogramming.R
 import com.obie.alp_frontend_visualprogramming.ui.uistate.AllJournalingUIState
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.AllJournalingViewModel
@@ -45,6 +42,7 @@ fun AllJournalingView(
     navController: NavHostController
 ){
     val dataStatus = viewModel.allJournalingStatus
+
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -140,12 +138,13 @@ fun AllJournalingView(
                 }
             }
 
+
         }
     }
 }
 
-@Composable
-@Preview(showBackground = true, showSystemUi = true)
-private fun AllJournalingViewPreview(){
-    AllJournalingView(viewModel(), rememberNavController())
-}
+//@Composable
+//@Preview(showBackground = true, showSystemUi = true)
+//private fun AllJournalingViewPreview(){
+//    AllJournalingView()
+//}
