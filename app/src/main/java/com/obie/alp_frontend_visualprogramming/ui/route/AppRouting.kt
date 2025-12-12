@@ -18,6 +18,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -83,7 +85,8 @@ fun AppRouting(){
                                 label = {
                                     Text(
                                         text = item.title,
-                                        color = if (selectedItemIndex == index) Color(0xFFFDDE8F) else Color.White
+                                        color = if (selectedItemIndex == index) Color(0xFFFDDE8F) else Color.White,
+                                        fontFamily = FontFamily(Font(R.font.helveticaneuebold))
                                     )
                                 },
                                 colors = NavigationBarItemDefaults.colors(indicatorColor = Color(0xFFFDDE8F))

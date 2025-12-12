@@ -105,7 +105,7 @@ fun CreateJournalView(
                 onValueChange = { viewModel.title = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(48.dp),
+                    .height(55.dp),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color(0xFFE8D5F5),
                     unfocusedContainerColor = Color(0xFFE8D5F5),
@@ -130,7 +130,7 @@ fun CreateJournalView(
                 onValueChange = { viewModel.date = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(48.dp),
+                    .height(55.dp),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color(0xFFE8D5F5),
                     unfocusedContainerColor = Color(0xFFE8D5F5),
@@ -194,8 +194,8 @@ fun CreateJournalView(
 
 
 
-@Composable
-@Preview(showBackground = true, showSystemUi = true)
-private fun CreateJournalViewPreview(){
-    CreateJournalView()
-}
+//@Composable
+//@Preview(showBackground = true, showSystemUi = true)
+//private fun CreateJournalViewPreview(){
+//    CreateJournalView()
+//}
