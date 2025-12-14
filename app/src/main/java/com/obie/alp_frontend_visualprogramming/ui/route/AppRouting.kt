@@ -2,6 +2,7 @@ package com.obie.alp_frontend_visualprogramming.ui.route
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -95,7 +96,11 @@ fun AppRouting(){
                     }
                 }
             }) { innerPadding ->
-            NavHost(navController = navController, startDestination = "Journal"){
+            NavHost(
+                navController = navController,
+                startDestination = "Affirmation",
+                modifier = Modifier.padding(innerPadding)
+            ){
                 composable("Journal"){
                     AllJournalingView(viewModel = allJournalingViewModel, navController = navController)
                 }
@@ -106,7 +111,7 @@ fun AppRouting(){
                 }
 
                 composable("CreateJournal"){
-                    CreateJournalView(viewModel = createJournalViewModel, navController = navController)
+                    CreateJournalView(viewModel = createJournalViewModel, navController = navController, viewModelHelper = allJournalingViewModel)
                 }
 
                 composable("Affirmation"){

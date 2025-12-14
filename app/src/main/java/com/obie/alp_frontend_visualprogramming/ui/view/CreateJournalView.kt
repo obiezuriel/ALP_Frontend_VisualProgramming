@@ -25,12 +25,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.obie.alp_frontend_visualprogramming.R
+import com.obie.alp_frontend_visualprogramming.ui.viewmodel.AllJournalingViewModel
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.CreateJournalViewModel
 
 @Composable
 fun CreateJournalView(
     viewModel: CreateJournalViewModel,
-    navController: NavHostController
+    navController: NavHostController,
+    viewModelHelper: AllJournalingViewModel
 ){
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -102,7 +104,10 @@ fun CreateJournalView(
             Spacer(modifier = Modifier.height(8.dp))
             TextField(
                 value = viewModel.title,
-                onValueChange = { viewModel.title = it },
+                onValueChange = {
+                    viewModel.title = it
+                    viewModel.checkNullFormValues()
+                                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(55.dp),
@@ -127,7 +132,10 @@ fun CreateJournalView(
             Spacer(modifier = Modifier.height(8.dp))
             TextField(
                 value = viewModel.date,
-                onValueChange = { viewModel.date = it },
+                onValueChange = {
+                    viewModel.date = it
+                    viewModel.checkNullFormValues()
+                                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(55.dp),
@@ -152,7 +160,10 @@ fun CreateJournalView(
             Spacer(modifier = Modifier.height(8.dp))
             TextField(
                 value = viewModel.content,
-                onValueChange = { viewModel.content = it },
+                onValueChange = {
+                    viewModel.content = it
+                    viewModel.checkNullFormValues()
+                                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp),
@@ -169,7 +180,12 @@ fun CreateJournalView(
 
 
             Button(
-                onClick = { /* Handle save */ },
+                onClick = {
+                    viewModel.createJournal(viewModel.date, viewModel.title, viewModel.content)
+                    viewModelHelper.getAllJournals()
+                    navController.popBackStack()
+                          },
+                enabled = viewModel.isCreate,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 40.dp)
