@@ -32,4 +32,11 @@ class CreateJournalViewModel : ViewModel() {
     fun checkNullFormValues(){
         isCreate = title.isNotEmpty() && date.isNotEmpty() && content.isNotEmpty()
     }
+
+    fun resetForm() {
+        title = ""
+        date = ""
+        content = ""
+        isCreate = false
+    }
 }
