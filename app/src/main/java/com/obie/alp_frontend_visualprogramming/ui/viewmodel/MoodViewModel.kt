@@ -1,4 +1,4 @@
-package com.obie.alp_frontend_visualprogramming.viewmodel
+package com.obie.alp_frontend_visualprogramming.ui.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

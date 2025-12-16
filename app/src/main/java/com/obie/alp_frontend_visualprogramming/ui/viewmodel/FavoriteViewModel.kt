@@ -5,12 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.obie.alp_frontend_visualprogramming.data.container.JournalServerContainer
+import com.obie.alp_frontend_visualprogramming.data.container.FavoriteServerContainer
 import com.obie.alp_frontend_visualprogramming.ui.uistate.AllFavoriteUIState
 import kotlinx.coroutines.launch
 
 class FavoriteViewModel : ViewModel() {
-    private val favoriteRepository = JournalServerContainer().favoriteRepository
+    private val favoriteRepository = FavoriteServerContainer().favoriteRepository
 
     var allFavoriteUIState: AllFavoriteUIState by mutableStateOf(AllFavoriteUIState.Start)
         private set
@@ -52,7 +52,7 @@ class FavoriteViewModel : ViewModel() {
         }
     }
 
-    //GET cek kata afirmasi udah di favorit
+    //GET cek kata afirmasi udah masuk favorit
     fun checkFavorited(userId: Int, text: String) {
         viewModelScope.launch {
             try {
