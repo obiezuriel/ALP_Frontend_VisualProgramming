@@ -183,6 +183,7 @@ fun CreateJournalView(
                 onClick = {
                     viewModel.createJournal(viewModel.date, viewModel.title, viewModel.content)
                     viewModelHelper.getAllJournals()
+                    viewModel.resetForm()
                     navController.popBackStack()
                           },
                 enabled = viewModel.isCreate,
