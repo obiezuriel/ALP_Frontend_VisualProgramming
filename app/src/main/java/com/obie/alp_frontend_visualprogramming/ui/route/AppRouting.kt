@@ -29,12 +29,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.obie.alp_frontend_visualprogramming.R
 import com.obie.alp_frontend_visualprogramming.ui.model.BottomNavigationItem
+import com.obie.alp_frontend_visualprogramming.ui.uistate.MeditationUIState
 import com.obie.alp_frontend_visualprogramming.ui.view.AllJournalingView
 import com.obie.alp_frontend_visualprogramming.ui.view.CreateJournalView
 import com.obie.alp_frontend_visualprogramming.ui.view.JournalDetailView
+import com.obie.alp_frontend_visualprogramming.ui.view.MeditationDetailView
+import com.obie.alp_frontend_visualprogramming.ui.view.MeditationListView
+import com.obie.alp_frontend_visualprogramming.ui.view.MeditationPlayerView
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.AllJournalingViewModel
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.CreateJournalViewModel
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.JournalDetailViewModel
+import com.obie.alp_frontend_visualprogramming.ui.viewmodel.MeditationViewModel
+import com.obie.alp_frontend_visualprogramming.ui.viewmodel.MoodViewModel
 
 @Composable
 fun AppRouting(){
