@@ -29,14 +29,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.obie.alp_frontend_visualprogramming.R
 import com.obie.alp_frontend_visualprogramming.ui.model.BottomNavigationItem
-import com.obie.alp_frontend_visualprogramming.ui.view.AffirmationView
 import com.obie.alp_frontend_visualprogramming.ui.view.AllJournalingView
 import com.obie.alp_frontend_visualprogramming.ui.view.CreateJournalView
 import com.obie.alp_frontend_visualprogramming.ui.view.JournalDetailView
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.AllJournalingViewModel
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.CreateJournalViewModel
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.JournalDetailViewModel
-import com.obie.alp_frontend_visualprogramming.ui.viewmodel.MoodViewModel
 
 @Composable
 fun AppRouting(){
@@ -58,6 +56,7 @@ fun AppRouting(){
     val journalDetailViewModel: JournalDetailViewModel = viewModel()
     val createJournalViewModel: CreateJournalViewModel = viewModel()
     val moodViewModel: MoodViewModel = viewModel()
+    val meditationViewModel: MeditationViewModel = viewModel()
 
     val navController: NavHostController = rememberNavController()
 
@@ -118,11 +117,28 @@ fun AppRouting(){
                 }
 
                 composable("Affirmation"){
-                    AffirmationView(viewModel = moodViewModel, navController = navController)
+
                 }
 
                 composable("Meditation"){
+                    MeditationListView(viewModel = meditationViewModel, navController = navController)
+                }
 
+                composable("MeditationDetail/{meditationId}"){ backStackEntry ->
+                    val id = backStackEntry.arguments?.getString("meditationId")?.toIntOrNull() ?: 0
+                    val meditation = (meditationViewModel.meditationState as? MeditationUIState.Success)?.meditations?.firstOrNull { it.id == id }
+                    meditation?.let {
+                        MeditationDetailView(it, navController)
+                    }
+                }
+
+                composable("MeditationPlayer/{meditationId}/{songTitle}"){ backStackEntry ->
+                    val id = backStackEntry.arguments?.getString("meditationId")?.toIntOrNull() ?: 0
+                    val songTitle = backStackEntry.arguments?.getString("songTitle") ?: "Now Playing"
+                    val meditation = (meditationViewModel.meditationState as? MeditationUIState.Success)?.meditations?.firstOrNull { it.id == id }
+                    meditation?.let {
+                        MeditationPlayerView(meditationId = it.id, navController = navController, songTitle = songTitle)
+                    }
                 }
 
             }
