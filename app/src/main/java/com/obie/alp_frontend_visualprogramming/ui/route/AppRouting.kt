@@ -30,6 +30,7 @@ import androidx.navigation.compose.rememberNavController
 import com.obie.alp_frontend_visualprogramming.R
 import com.obie.alp_frontend_visualprogramming.ui.model.BottomNavigationItem
 import com.obie.alp_frontend_visualprogramming.ui.uistate.MeditationUIState
+import com.obie.alp_frontend_visualprogramming.ui.view.AffirmationView
 import com.obie.alp_frontend_visualprogramming.ui.view.AllJournalingView
 import com.obie.alp_frontend_visualprogramming.ui.view.CreateJournalView
 import com.obie.alp_frontend_visualprogramming.ui.view.JournalDetailView
@@ -123,7 +124,7 @@ fun AppRouting(){
                 }
 
                 composable("Affirmation"){
-
+                    AffirmationView(viewModel = moodViewModel, navController = navController)
                 }
 
                 composable("Meditation"){
