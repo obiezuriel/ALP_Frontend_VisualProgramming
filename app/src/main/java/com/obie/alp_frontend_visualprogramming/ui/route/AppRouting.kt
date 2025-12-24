@@ -141,7 +141,7 @@ fun AppRouting(){
                     val songTitle = backStackEntry.arguments?.getString("songTitle") ?: "Now Playing"
                     val meditation = (meditationViewModel.meditationState as? MeditationUIState.Success)?.meditations?.firstOrNull { it.id == id }
                     meditation?.let {
-                        MeditationPlayerView(audioUrl = it.audioUrl, navController = navController, songTitle = songTitle)
+                        MeditationPlayerView(meditationId = it.id, navController = navController, songTitle = songTitle)
                     }
                 }
 

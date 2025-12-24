@@ -5,6 +5,5 @@ data class MeditationSong(
     val title: String,
     val duration: Int,
     val description: String,
-    val audioUrl: String,
     val coverImage: String
 )

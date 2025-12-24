@@ -9,7 +9,6 @@ data class MeditationWrapper(
         val title: String,
         val duration: Int,
         val description: String,
-        val audioUrl: String,
         val coverImage: String
     )
 }

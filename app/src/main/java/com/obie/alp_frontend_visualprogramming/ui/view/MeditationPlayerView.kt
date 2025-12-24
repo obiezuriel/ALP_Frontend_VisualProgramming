@@ -11,6 +11,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.FastForward
+import androidx.compose.material.icons.filled.FastRewind
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -30,7 +32,8 @@ import com.obie.alp_frontend_visualprogramming.R
 import android.util.Log
 
 @Composable
-fun MeditationPlayerView(audioUrl: String, navController: NavHostController, songTitle: String = "Now Playing"){
+fun MeditationPlayerView(meditationId: Int, navController: NavHostController, songTitle: String = "Now Playing"){
+    val audioUrl = "http://10.0.2.2:3000/api/meditations/$meditationId/stream"
     var player: MediaPlayer? by remember { mutableStateOf(null) }
     var isPlaying by remember { mutableStateOf(false) }
     var currentPosition by remember { mutableStateOf(0) }
@@ -43,7 +46,10 @@ fun MeditationPlayerView(audioUrl: String, navController: NavHostController, son
                 setDataSource(audioUrl)
                 setOnPreparedListener {
                     duration = this.duration
-                    Log.d("MeditationPlayer", "Audio prepared. Duration: $duration ms")
+                    // Auto-play when audio is ready
+                    this.start()
+                    isPlaying = true
+                    Log.d("MeditationPlayer", "Audio prepared and auto-playing. Duration: $duration ms")
                 }
                 setOnErrorListener { mp, what, extra ->
                     Log.e("MeditationPlayer", "Error: what=$what, extra=$extra")
@@ -136,34 +142,99 @@ fun MeditationPlayerView(audioUrl: String, navController: NavHostController, son
 
                 Spacer(modifier = Modifier.height(80.dp))
 
-                // Play/Pause Button
-                Box(
+                // Play/Pause + Skip Controls
+                Row(
                     modifier = Modifier
-                        .size(80.dp)
-                        .clip(CircleShape)
-                        .background(Color(0xFF332A86))
-                        .clickable {
-                            try {
-                                if (isPlaying) {
-                                    player?.pause()
-                                    Log.d("MeditationPlayer", "Paused")
-                                } else {
-                                    player?.start()
-                                    Log.d("MeditationPlayer", "Started playing")
-                                }
-                                isPlaying = !isPlaying
-                            } catch (e: Exception) {
-                                Log.e("MeditationPlayer", "Play error: ${e.message}")
-                            }
-                        },
-                    contentAlignment = Alignment.Center
+                        .fillMaxWidth()
+                        .padding(horizontal = 40.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        imageVector = if (isPlaying) Icons.Filled.Pause else Icons.Filled.PlayArrow,
-                        contentDescription = if (isPlaying) "Pause" else "Play",
-                        tint = Color.White,
-                        modifier = Modifier.size(50.dp)
-                    )
+                    // Rewind Button (5 seconds backward)
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(CircleShape)
+                            .background(Color(0xFF332A86).copy(alpha = 0.6f))
+                            .clickable {
+                                try {
+                                    val newPosition = (currentPosition - 5000).coerceAtLeast(0)
+                                    player?.seekTo(newPosition)
+                                    currentPosition = newPosition
+                                    Log.d("MeditationPlayer", "Rewind to: $newPosition ms")
+                                } catch (e: Exception) {
+                                    Log.e("MeditationPlayer", "Rewind error: ${e.message}")
+                                }
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.FastRewind,
+                            contentDescription = "Rewind 5s",
+                            tint = Color.White,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(60.dp))
+
+                    // Play/Pause Button
+                    Box(
+                        modifier = Modifier
+                            .size(80.dp)
+                            .clip(CircleShape)
+                            .background(Color(0xFF332A86))
+                            .clickable {
+                                try {
+                                    if (isPlaying) {
+                                        player?.pause()
+                                        Log.d("MeditationPlayer", "Paused")
+                                    } else {
+                                        player?.start()
+                                        Log.d("MeditationPlayer", "Started playing")
+                                    }
+                                    isPlaying = !isPlaying
+                                } catch (e: Exception) {
+                                    Log.e("MeditationPlayer", "Play error: ${e.message}")
+                                }
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = if (isPlaying) Icons.Filled.Pause else Icons.Filled.PlayArrow,
+                            contentDescription = if (isPlaying) "Pause" else "Play",
+                            tint = Color.White,
+                            modifier = Modifier.size(50.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(60.dp))
+
+                    // Forward Button (5 seconds forward)
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(CircleShape)
+                            .background(Color(0xFF332A86).copy(alpha = 0.6f))
+                            .clickable {
+                                try {
+                                    val newPosition = (currentPosition + 5000).coerceAtMost(duration)
+                                    player?.seekTo(newPosition)
+                                    currentPosition = newPosition
+                                    Log.d("MeditationPlayer", "Forward to: $newPosition ms")
+                                } catch (e: Exception) {
+                                    Log.e("MeditationPlayer", "Forward error: ${e.message}")
+                                }
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.FastForward,
+                            contentDescription = "Forward 5s",
+                            tint = Color.White,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(80.dp))
