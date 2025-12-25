@@ -32,11 +32,13 @@ import com.obie.alp_frontend_visualprogramming.ui.model.BottomNavigationItem
 import com.obie.alp_frontend_visualprogramming.ui.view.AffirmationView
 import com.obie.alp_frontend_visualprogramming.ui.view.AllJournalingView
 import com.obie.alp_frontend_visualprogramming.ui.view.CreateJournalView
+import com.obie.alp_frontend_visualprogramming.ui.view.FavoriteListView
 import com.obie.alp_frontend_visualprogramming.ui.view.JournalDetailView
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.AllJournalingViewModel
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.CreateJournalViewModel
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.JournalDetailViewModel
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.MoodViewModel
+import com.obie.alp_frontend_visualprogramming.ui.viewmodel.FavoriteViewModel
 
 @Composable
 fun AppRouting(){
@@ -58,6 +60,7 @@ fun AppRouting(){
     val journalDetailViewModel: JournalDetailViewModel = viewModel()
     val createJournalViewModel: CreateJournalViewModel = viewModel()
     val moodViewModel: MoodViewModel = viewModel()
+    val favoriteViewModel: FavoriteViewModel = viewModel()
 
     val navController: NavHostController = rememberNavController()
 
@@ -118,7 +121,18 @@ fun AppRouting(){
                 }
 
                 composable("Affirmation"){
-                    AffirmationView(viewModel = moodViewModel, navController = navController)
+                    AffirmationView(
+                        moodViewModel = moodViewModel,
+                        favoriteViewModel = favoriteViewModel,
+                        navController = navController
+                    )
+                }
+
+                composable("Favorites"){
+                    FavoriteListView(
+                        viewModel = favoriteViewModel,
+                        navController = navController
+                    )
                 }
 
                 composable("Meditation"){
