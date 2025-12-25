@@ -72,7 +72,7 @@ fun AppRouting(){
         Scaffold(modifier = Modifier.fillMaxSize(),
             bottomBar = {
                 val currentRoute = navController.currentBackStackEntryFlow.collectAsState(null).value?.destination?.route
-                if(currentRoute != "Journal/{journalId}" && currentRoute != "CreateJournal"){
+                if(currentRoute != "Journal/{journalId}" && currentRoute != "CreateJournal" && currentRoute != "MeditationDetail/{meditationId}" && currentRoute != "MeditationPlayer/{meditationId}/{songTitle}" ){
                     NavigationBar(containerColor = Color(0xFF332A86)) {
                         bottomNavigationItems.forEachIndexed {index, item ->
                             NavigationBarItem(
