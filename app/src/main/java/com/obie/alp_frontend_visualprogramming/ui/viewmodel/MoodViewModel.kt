@@ -5,12 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.obie.alp_frontend_visualprogramming.data.container.JournalServerContainer
+import com.obie.alp_frontend_visualprogramming.data.container.MoodServerContainer
 import com.obie.alp_frontend_visualprogramming.ui.uistate.MoodUIState
 import kotlinx.coroutines.launch
 
 class MoodViewModel : ViewModel() {
-    private val moodRepository = JournalServerContainer().moodRepository
+    private val moodRepository = MoodServerContainer().moodRepository
 
     var moodUIState: MoodUIState by mutableStateOf(MoodUIState.Start)
         private set
