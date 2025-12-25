@@ -53,7 +53,7 @@ fun MeditationListView(viewModel: MeditationViewModel, navController: NavHostCon
                 val data = (state as MeditationUIState.Success).meditations
                 Column(modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp)
+                    .padding(top = 80.dp, start = 20.dp, end = 20.dp, bottom = 20.dp)
                 ) {
                     Text(
                         text = "Meditation",
