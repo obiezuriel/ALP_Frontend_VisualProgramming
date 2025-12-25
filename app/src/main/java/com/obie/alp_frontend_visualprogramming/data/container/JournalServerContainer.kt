@@ -3,8 +3,6 @@ package com.obie.alp_frontend_visualprogramming.data.container
 import com.google.gson.GsonBuilder
 import com.obie.alp_frontend_visualprogramming.data.repository.JournalServerRepositories
 import com.obie.alp_frontend_visualprogramming.data.service.JournalServerService
-import com.obie.alp_frontend_visualprogramming.data.repository.MoodServerRepository
-import com.obie.alp_frontend_visualprogramming.data.service.MoodServerService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -29,13 +27,5 @@ class JournalServerContainer {
 
     val JournalServerRepository : JournalServerRepositories by lazy {
         JournalServerRepositories(retrofitService)
-    }
-
-    private val moodRetrofitService: MoodServerService by lazy {
-        retrofit.create(MoodServerService::class.java)
-    }
-
-    val moodRepository: MoodServerRepository by lazy {
-        MoodServerRepository(moodRetrofitService)
     }
 }

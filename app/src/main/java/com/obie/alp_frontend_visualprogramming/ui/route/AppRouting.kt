@@ -33,6 +33,7 @@ import com.obie.alp_frontend_visualprogramming.ui.uistate.MeditationUIState
 import com.obie.alp_frontend_visualprogramming.ui.view.AffirmationView
 import com.obie.alp_frontend_visualprogramming.ui.view.AllJournalingView
 import com.obie.alp_frontend_visualprogramming.ui.view.CreateJournalView
+import com.obie.alp_frontend_visualprogramming.ui.view.FavoriteListView
 import com.obie.alp_frontend_visualprogramming.ui.view.JournalDetailView
 import com.obie.alp_frontend_visualprogramming.ui.view.MeditationDetailView
 import com.obie.alp_frontend_visualprogramming.ui.view.MeditationListView
@@ -42,6 +43,7 @@ import com.obie.alp_frontend_visualprogramming.ui.viewmodel.CreateJournalViewMod
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.JournalDetailViewModel
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.MeditationViewModel
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.MoodViewModel
+import com.obie.alp_frontend_visualprogramming.ui.viewmodel.FavoriteViewModel
 
 @Composable
 fun AppRouting(){
@@ -63,6 +65,7 @@ fun AppRouting(){
     val journalDetailViewModel: JournalDetailViewModel = viewModel()
     val createJournalViewModel: CreateJournalViewModel = viewModel()
     val moodViewModel: MoodViewModel = viewModel()
+    val favoriteViewModel: FavoriteViewModel = viewModel()
     val meditationViewModel: MeditationViewModel = viewModel()
 
     val navController: NavHostController = rememberNavController()
@@ -124,7 +127,18 @@ fun AppRouting(){
                 }
 
                 composable("Affirmation"){
-                    AffirmationView(viewModel = moodViewModel, navController = navController)
+                    AffirmationView(
+                        moodViewModel = moodViewModel,
+                        favoriteViewModel = favoriteViewModel,
+                        navController = navController
+                    )
+                }
+
+                composable("Favorites"){
+                    FavoriteListView(
+                        viewModel = favoriteViewModel,
+                        navController = navController
+                    )
                 }
 
                 composable("Meditation"){
