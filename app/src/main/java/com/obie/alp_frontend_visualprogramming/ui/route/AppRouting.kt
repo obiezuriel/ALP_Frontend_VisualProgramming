@@ -29,14 +29,19 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.obie.alp_frontend_visualprogramming.R
 import com.obie.alp_frontend_visualprogramming.ui.model.BottomNavigationItem
+import com.obie.alp_frontend_visualprogramming.ui.uistate.MeditationUIState
 import com.obie.alp_frontend_visualprogramming.ui.view.AffirmationView
 import com.obie.alp_frontend_visualprogramming.ui.view.AllJournalingView
 import com.obie.alp_frontend_visualprogramming.ui.view.CreateJournalView
 import com.obie.alp_frontend_visualprogramming.ui.view.FavoriteListView
 import com.obie.alp_frontend_visualprogramming.ui.view.JournalDetailView
+import com.obie.alp_frontend_visualprogramming.ui.view.MeditationDetailView
+import com.obie.alp_frontend_visualprogramming.ui.view.MeditationListView
+import com.obie.alp_frontend_visualprogramming.ui.view.MeditationPlayerView
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.AllJournalingViewModel
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.CreateJournalViewModel
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.JournalDetailViewModel
+import com.obie.alp_frontend_visualprogramming.ui.viewmodel.MeditationViewModel
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.MoodViewModel
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.FavoriteViewModel
 
@@ -61,6 +66,7 @@ fun AppRouting(){
     val createJournalViewModel: CreateJournalViewModel = viewModel()
     val moodViewModel: MoodViewModel = viewModel()
     val favoriteViewModel: FavoriteViewModel = viewModel()
+    val meditationViewModel: MeditationViewModel = viewModel()
 
     val navController: NavHostController = rememberNavController()
 
@@ -69,7 +75,7 @@ fun AppRouting(){
         Scaffold(modifier = Modifier.fillMaxSize(),
             bottomBar = {
                 val currentRoute = navController.currentBackStackEntryFlow.collectAsState(null).value?.destination?.route
-                if(currentRoute != "Journal/{journalId}" && currentRoute != "CreateJournal"){
+                if(currentRoute != "Journal/{journalId}" && currentRoute != "CreateJournal" && currentRoute != "MeditationDetail/{meditationId}" && currentRoute != "MeditationPlayer/{meditationId}/{songTitle}" ){
                     NavigationBar(containerColor = Color(0xFF332A86)) {
                         bottomNavigationItems.forEachIndexed {index, item ->
                             NavigationBarItem(
@@ -136,7 +142,24 @@ fun AppRouting(){
                 }
 
                 composable("Meditation"){
+                    MeditationListView(viewModel = meditationViewModel, navController = navController)
+                }
 
+                composable("MeditationDetail/{meditationId}"){ backStackEntry ->
+                    val id = backStackEntry.arguments?.getString("meditationId")?.toIntOrNull() ?: 0
+                    val meditation = (meditationViewModel.meditationState as? MeditationUIState.Success)?.meditations?.firstOrNull { it.id == id }
+                    meditation?.let {
+                        MeditationDetailView(it, navController)
+                    }
+                }
+
+                composable("MeditationPlayer/{meditationId}/{songTitle}"){ backStackEntry ->
+                    val id = backStackEntry.arguments?.getString("meditationId")?.toIntOrNull() ?: 0
+                    val songTitle = backStackEntry.arguments?.getString("songTitle") ?: "Now Playing"
+                    val meditation = (meditationViewModel.meditationState as? MeditationUIState.Success)?.meditations?.firstOrNull { it.id == id }
+                    meditation?.let {
+                        MeditationPlayerView(meditationId = it.id, navController = navController, songTitle = songTitle)
+                    }
                 }
 
             }
