@@ -159,7 +159,7 @@ fun AffirmationContent(
                             is MoodUIState.Success -> "\"${moodState.mood.affirmation_text}\""
                             is MoodUIState.Error -> "Oops, something went wrong!"
                         },
-                        fontFamily = FontFamily(Font(R.font.helveticaneuelight)),
+                        fontFamily = FontFamily(Font(R.font.helveticaneuebold)),
                         fontSize = 20.sp,
                         color = Color(color = 0xFF484599),
                         textAlign = TextAlign.Center,
