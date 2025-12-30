@@ -24,7 +24,7 @@ class CreateJournalViewModel : ViewModel() {
             try {
                 journalServerRepositories.createJournal(date, title, content)
             } catch (e: Exception){
-
+                // If it is error
             }
         }
     }

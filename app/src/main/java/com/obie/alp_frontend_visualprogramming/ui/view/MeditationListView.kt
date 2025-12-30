@@ -53,7 +53,7 @@ fun MeditationListView(viewModel: MeditationViewModel, navController: NavHostCon
                 val data = (state as MeditationUIState.Success).meditations
                 Column(modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 80.dp, start = 20.dp, end = 20.dp, bottom = 20.dp)
+                    .padding(top = 100.dp, start = 20.dp, end = 20.dp, bottom = 20.dp)
                 ) {
                     Text(
                         text = "Meditation",
@@ -65,8 +65,8 @@ fun MeditationListView(viewModel: MeditationViewModel, navController: NavHostCon
                     Text(
                         text = "Let your mind settle under gentle starlight.",
                         color = Color(0xFFE0E0E0),
-                        fontSize = 12.sp,
-                        fontFamily = FontFamily(Font(R.font.helveticaneuebold)),
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily(Font(R.font.helveticaneuelight)),
                         modifier = Modifier.padding(bottom = 20.dp)
                     )
                     LazyVerticalGrid(columns = GridCells.Fixed(2),
