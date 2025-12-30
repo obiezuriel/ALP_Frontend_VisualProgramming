@@ -1,5 +1,9 @@
 package com.obie.alp_frontend_visualprogramming.ui.view
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,13 +18,17 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bookmarks
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -42,6 +50,34 @@ fun AffirmationContent(
     onBookmarkClick: () -> Unit,
     onNavigateToFavorites: () -> Unit
 ) {
+    var triggerIconAnimation by remember { mutableStateOf(false) }
+
+    val rotation = remember { Animatable(0f) }
+    val scale = remember { Animatable(1f) }
+
+    //trigger animation
+    LaunchedEffect(triggerIconAnimation) {
+        if (triggerIconAnimation) {
+            //scale up
+            scale.animateTo(1.3f, animationSpec = tween(50))
+
+            //jiggle
+            rotation.animateTo(-15f, animationSpec = tween(40))
+            rotation.animateTo(15f, animationSpec = tween(40))
+            rotation.animateTo(-15f, animationSpec = tween(40))
+            rotation.animateTo(15f, animationSpec = tween(40))
+            rotation.animateTo(0f, animationSpec = tween(40))
+
+            //final
+            scale.animateTo(1f, animationSpec = spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessLow
+            ))
+
+            triggerIconAnimation = false
+        }
+    }
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -53,15 +89,18 @@ fun AffirmationContent(
             modifier = Modifier.fillMaxSize()
         )
 
-        Icon(
-            imageVector = Icons.Default.Bookmarks,
+        //bookmark
+        Image(
+            painter = painterResource(id = R.drawable.affirmation_bookmark_icon),
             contentDescription = "Go to Favorites",
-            tint = Color(0xFFFFE08F),
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(top = 60.dp, end = 24.dp)
-                .size(28.dp)
-                .clickable { onNavigateToFavorites() }
+                .padding(top = 62.dp, end = 14.dp)
+                .size(60.dp)
+                .scale(scale.value)
+                .rotate(rotation.value)
+                .clickable { onNavigateToFavorites() },
+            contentScale = ContentScale.Fit
         )
 
         Column(
@@ -106,14 +145,13 @@ fun AffirmationContent(
                     contentScale = ContentScale.Fit
                 )
 
-                //affirmation text
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
+                // Affirmation text + bookmark
+                Box(
                     modifier = Modifier
                         .padding(horizontal = 30.dp)
                         .offset(y = (-10).dp)
                 ) {
+                    //affirmation text
                     Text(
                         text = when (moodState) {
                             is MoodUIState.Start -> "\"Your energy feels unique today.\nMind telling me how your mood is?\""
@@ -125,19 +163,25 @@ fun AffirmationContent(
                         fontSize = 20.sp,
                         color = Color(color = 0xFF484599),
                         textAlign = TextAlign.Center,
-                        lineHeight = 20.sp,
-                        modifier = Modifier.weight(1f)
+                        lineHeight = 20.sp
                     )
 
-                    //bookmark
+                    //star
                     if (moodState is MoodUIState.Success) {
-                        Spacer(modifier = Modifier.width(8.dp))
                         Image(
                             painter = painterResource(id = R.drawable.affirmation_bookmark),
                             contentDescription = "Save to Bookmark",
                             modifier = Modifier
-                                .size(24.dp)
-                                .clickable { onBookmarkClick() }
+                                .size(40.dp)
+                                .align(Alignment.CenterEnd)
+                                .offset(
+                                    x = 20.dp,
+                                    y = -20.dp
+                                )
+                                .clickable {
+                                    onBookmarkClick()
+                                    triggerIconAnimation = true
+                                }
                         )
                     }
                 }
@@ -145,7 +189,7 @@ fun AffirmationContent(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            //maskot
+            //mascot
             Image(
                 painter = painterResource(id = R.drawable.affirmation_maskot),
                 contentDescription = "Mascot",
@@ -206,8 +250,6 @@ fun AffirmationContent(
     }
 }
 
-//state
-//start
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun AffirmationContentPreview_Start() {
@@ -219,7 +261,6 @@ private fun AffirmationContentPreview_Start() {
     )
 }
 
-//success
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun AffirmationContentPreview_Success() {
@@ -237,7 +278,6 @@ private fun AffirmationContentPreview_Success() {
     )
 }
 
-//loading
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun AffirmationContentPreview_Loading() {
@@ -249,7 +289,6 @@ private fun AffirmationContentPreview_Loading() {
     )
 }
 
-//rror
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun AffirmationContentPreview_Error() {
