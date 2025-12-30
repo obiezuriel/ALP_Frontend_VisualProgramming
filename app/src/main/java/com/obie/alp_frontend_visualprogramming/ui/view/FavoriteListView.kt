@@ -22,9 +22,11 @@ fun FavoriteListView(
         onBackClick = {
             navController.popBackStack()
         },
-        onFavoriteClick = { favorite ->
-            // TODO: Navigate to detail/edit screen if needed
-            // For now, just placeholder
+        onEditFavorite = { favorite, newNote ->
+            viewModel.updateFavorite(favorite.id, newNote, userId)
+        },
+        onDeleteFavorite = { favorite ->
+            viewModel.deleteFavorite(favorite.id, userId)
         }
     )
 }
