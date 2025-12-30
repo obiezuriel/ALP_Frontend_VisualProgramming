@@ -30,13 +30,14 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.obie.alp_frontend_visualprogramming.R
 import com.obie.alp_frontend_visualprogramming.ui.model.MeditationWrapper
+import com.obie.alp_frontend_visualprogramming.ui.view.formatDuration
 
 @Composable
 fun MeditationDetailView(meditation: MeditationWrapper.MeditationData, navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF5E6F0))
+            .background(Color(0xFFF3DBEA))
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
@@ -95,7 +96,7 @@ fun MeditationDetailView(meditation: MeditationWrapper.MeditationData, navContro
 
                 // Duration
                 Text(
-                    text = "${meditation.duration} MIN",
+                    text = "${formatDuration(meditation.duration)} MIN",
                     fontSize = 12.sp,
                     fontFamily = FontFamily(Font(R.font.helveticaneuebold)),
                     color = Color(0xFF666666),
@@ -107,7 +108,7 @@ fun MeditationDetailView(meditation: MeditationWrapper.MeditationData, navContro
                 // Description
                 Text(
                     text = meditation.description,
-                    fontSize = 14.sp,
+                    fontSize = 16.sp,
                     lineHeight = 22.sp,
                     fontFamily = FontFamily(Font(R.font.helveticaneuelight)),
                     color = Color(0xFF4A4A4A)
@@ -123,13 +124,13 @@ fun MeditationDetailView(meditation: MeditationWrapper.MeditationData, navContro
                     Icon(
                         imageVector = Icons.Filled.Headphones,
                         contentDescription = "Listening",
-                        tint = Color(0xFF9B9B9B),
+                        tint = Color(0xFF666666),
                         modifier = Modifier.size(16.dp)
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
                         text = "34,234 Listening",
-                        color = Color(0xFF9B9B9B),
+                        color = Color(0xFF666666),
                         fontSize = 12.sp,
                         fontFamily = FontFamily(Font(R.font.helveticaneuebold))
                     )

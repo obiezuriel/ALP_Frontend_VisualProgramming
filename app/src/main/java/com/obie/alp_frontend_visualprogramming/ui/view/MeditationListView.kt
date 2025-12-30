@@ -32,6 +32,12 @@ import com.obie.alp_frontend_visualprogramming.ui.model.MeditationWrapper
 import com.obie.alp_frontend_visualprogramming.ui.uistate.MeditationUIState
 import com.obie.alp_frontend_visualprogramming.ui.viewmodel.MeditationViewModel
 
+fun formatDuration(seconds: Int): String {
+    val minutes = seconds / 60
+    val secs = seconds % 60
+    return String.format("%d:%02d", minutes, secs)
+}
+
 @Composable
 fun MeditationListView(viewModel: MeditationViewModel, navController: NavHostController){
     val state = viewModel.meditationState
@@ -71,8 +77,8 @@ fun MeditationListView(viewModel: MeditationViewModel, navController: NavHostCon
                     )
                     LazyVerticalGrid(columns = GridCells.Fixed(2),
                         modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.spacedBy(16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
                         contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp)
                     ){
                         items(data){ item ->
@@ -99,22 +105,22 @@ fun MeditationCard(item: MeditationWrapper.MeditationData, onClick: (Int) -> Uni
         Image(
             painter = painterResource(R.drawable.cardmusic),
             contentDescription = item.title,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Fit,
             modifier = Modifier
-                .height(130.dp)
+                .height(150.dp)
                 .fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(3.dp))
         Text(
             text = item.title,
             color = Color.White,
-            fontSize = 13.sp,
+            fontSize = 14.sp,
             fontFamily = FontFamily(Font(R.font.helveticaneuebold))
         )
         Text(
-            text = "${item.duration} MIN",
+            text = "${formatDuration(item.duration)} MIN",
             color = Color(0xFFFDDE8F),
-            fontSize = 11.sp,
+            fontSize = 12.sp,
             fontFamily = FontFamily(Font(R.font.helveticaneuebold))
         )
     }
