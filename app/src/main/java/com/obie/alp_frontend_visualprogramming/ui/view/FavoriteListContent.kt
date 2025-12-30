@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -55,7 +56,6 @@ fun FavoriteListContent(
     onEditFavorite: (FavoriteData, String) -> Unit,
     onDeleteFavorite: (FavoriteData) -> Unit
 ) {
-    // State untuk dialog
     var showEditDialog by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
     var selectedFavorite by remember { mutableStateOf<FavoriteData?>(null) }
@@ -66,11 +66,9 @@ fun FavoriteListContent(
             .fillMaxSize()
             .background(Color(0xFF9D8AC7))
     ) {
-        // Hang star
+        //hang star
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
         ) {
             Image(
@@ -78,7 +76,7 @@ fun FavoriteListContent(
                 contentDescription = "Pink Star",
                 modifier = Modifier
                     .size(80.dp)
-                    .padding(end = 20.dp),
+                    .offset(y = -6.dp),
                 contentScale = ContentScale.Fit
             )
 
@@ -86,7 +84,7 @@ fun FavoriteListContent(
                 painter = painterResource(id = R.drawable.hang_star_y),
                 contentDescription = "Yellow Star",
                 modifier = Modifier
-                    .size(100.dp)
+                    .size(120.dp)
                     .padding(end = 10.dp),
                 contentScale = ContentScale.Fit
             )
@@ -97,7 +95,7 @@ fun FavoriteListContent(
                 .fillMaxSize()
                 .padding(top = 40.dp, start = 24.dp, end = 24.dp)
         ) {
-            // Back button
+            //back button
             Image(
                 painter = painterResource(id = R.drawable.back_button),
                 contentDescription = "Back",
@@ -109,7 +107,6 @@ fun FavoriteListContent(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Title
             Text(
                 text = "Bookmark",
                 fontFamily = FontFamily(Font(R.font.helveticaneuebold)),
@@ -119,10 +116,8 @@ fun FavoriteListContent(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Content based on state
             when (favoriteState) {
                 is AllFavoriteUIState.Start -> {
-                    // Empty state
                 }
 
                 is AllFavoriteUIState.Loading -> {
@@ -180,7 +175,7 @@ fun FavoriteListContent(
         }
     }
 
-    // Edit Dialog
+    //edit dialog
     if (showEditDialog && selectedFavorite != null) {
         AlertDialog(
             onDismissRequest = { showEditDialog = false },
@@ -230,7 +225,7 @@ fun FavoriteListContent(
         )
     }
 
-    // Delete Confirmation Dialog
+    //confirm delete
     if (showDeleteDialog && selectedFavorite != null) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
@@ -275,13 +270,12 @@ fun FavoriteCard(
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-        // Title row dengan icon Edit & Delete
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Title/Note
+            //note
             Text(
                 text = if (favorite.note.isNullOrEmpty()) "Untitled" else favorite.note,
                 fontFamily = FontFamily(Font(R.font.helveticaneuelight)),
@@ -290,9 +284,8 @@ fun FavoriteCard(
                 modifier = Modifier.weight(1f)
             )
 
-            // Edit & Delete icons
             Row {
-                // Edit icon (kuning)
+                //edit
                 IconButton(
                     onClick = onEditClick,
                     modifier = Modifier.size(32.dp)
@@ -307,7 +300,7 @@ fun FavoriteCard(
 
                 Spacer(modifier = Modifier.width(4.dp))
 
-                // Delete icon (merah)
+                //delete
                 IconButton(
                     onClick = onDeleteClick,
                     modifier = Modifier.size(32.dp)
@@ -324,7 +317,7 @@ fun FavoriteCard(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Affirmation text card
+        //text card
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -342,7 +335,6 @@ fun FavoriteCard(
     }
 }
 
-// Previews
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun FavoriteListContentPreview_Start() {
