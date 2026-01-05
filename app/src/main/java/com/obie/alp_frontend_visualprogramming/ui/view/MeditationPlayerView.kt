@@ -33,7 +33,7 @@ import android.util.Log
 
 @Composable
 fun MeditationPlayerView(meditationId: Int, navController: NavHostController, songTitle: String = "Now Playing"){
-    val audioUrl = "http://10.0.2.2:3000/api/meditations/$meditationId/stream"
+    val audioUrl = "http://127.0.0.1:3000/api/meditations/$meditationId/stream"
     var player: MediaPlayer? by remember { mutableStateOf(null) }
     var isPlaying by remember { mutableStateOf(false) }
     var currentPosition by remember { mutableStateOf(0) }
