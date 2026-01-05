@@ -112,6 +112,8 @@ fun CreateJournalView(
                     .fillMaxWidth()
                     .height(55.dp),
                 colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
                     focusedContainerColor = Color(0xFFE8D5F5),
                     unfocusedContainerColor = Color(0xFFE8D5F5),
                     focusedIndicatorColor = Color.Transparent,
@@ -140,6 +142,8 @@ fun CreateJournalView(
                     .fillMaxWidth()
                     .height(55.dp),
                 colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
                     focusedContainerColor = Color(0xFFE8D5F5),
                     unfocusedContainerColor = Color(0xFFE8D5F5),
                     focusedIndicatorColor = Color.Transparent,
@@ -166,8 +170,10 @@ fun CreateJournalView(
                                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp),
+                    .height(160.dp),
                 colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
                     focusedContainerColor = Color(0xFFE8D5F5),
                     unfocusedContainerColor = Color(0xFFE8D5F5),
                     focusedIndicatorColor = Color.Transparent,
